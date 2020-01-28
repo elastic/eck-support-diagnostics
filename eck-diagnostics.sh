@@ -65,7 +65,7 @@ die() {
 
 show_help(){
 	echo "ECK Diagnostics"
-	echo "Usage: ./diagnostics.sh [OPTIONS]"
+	echo "Usage: ./eck-diagnostics.sh [OPTIONS]"
 	echo ""
 	echo "Options:"
 	echo "-s|--system #collects system information"
@@ -79,7 +79,7 @@ show_help(){
 	echo "-h|--help #shows this"
 	echo ""
 	echo "Sample usage:"
-	echo "\"./diagnostics.sh -d -s -k\" #collects docker, system and kubernetes level info"
+	echo "\"./eck-diagnostics.sh -d -s -k\" #collects docker, system and kubernetes level info"
 	echo ""
 }
 

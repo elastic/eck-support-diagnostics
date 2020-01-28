@@ -9,9 +9,9 @@ Collects Docker, System and Kubernetes level information from ECK for Elastic Su
 ## Usage
 
 ```
-[root@yourhost]# ./diagnostics.sh
+[root@yourhost]# ./eck-diagnostics.sh
 ECK Diagnostics
-Usage: ./diagnostics.sh [OPTIONS]
+Usage: ./eck-diagnostics.sh [OPTIONS]
 
 Options:
 -s|--system #collects system information
@@ -25,7 +25,7 @@ Options:
 -h|--help #shows this
 
 Sample usage:
-"./diagnostics.sh -d -s -k" #collects docker, system and kubernetes level info
+"./eck-diagnostics.sh -d -s -k" #collects docker, system and kubernetes level info
 ```
 
 ## Examples
@@ -33,23 +33,23 @@ Sample usage:
 Collect Docker, Sytem, and Kubernetes information from the default namespace, including the last hour of logs from user pods and the elastic operator pod
 
 ```
-./diagnostics.sh -d -s -k
+./eck-diagnostics.sh -d -s -k
 ```
 
 Collect the last 24 hours of pod logs, and use a non-default namespace
 
 ```
-./diagnostics.sh -d -s -k -t 24h -n my-elastic-namespace 
+./eck-diagnostics.sh -d -s -k -t 24h -n my-elastic-namespace 
 ```
 
 Collect Kubernetes information and output to a custom directory
 
 ```
-./diagnostics.sh -k -o /custom/storage   
+./eck-diagnostics.sh -k -o /custom/storage   
 ```
 
 Restrict resource collection to pods and configmaps.  Note that this does not prevent the capture of elastic custom resources (kubectl get elastic), or collection of base information (kubectl get nodes, e.g.)
 
 ```
-./diagnostics.sh -k pods,configmaps
+./eck-diagnostics.sh -k pods,configmaps
 ```
