@@ -8,12 +8,12 @@ kubernetes_namespace="default"
 kubernetes_operator_namespace="elastic-system"
 kubernetes_label_selector="common.k8s.elastic.co/type"
 kubernetes_kinds="pods,pv,pvc,configmap,ingress,service,deployment,statefulset,events,networkpolicies"
-docker_folder=$diag_folder/docker
 
 HARD_LIMIT_LOG_LINES=10000  # retrieving all log lines with --since (without --tail) results in hanging and high CPU as per https://github.com/kubernetes/kubernetes/issues/48465
 
 assign_output_paths() {
  diag_folder=$output_path/$diag_name
+ docker_folder=$diag_folder/docker
  kubernetes_folder=$diag_folder/kubernetes
  kubernetes_logs_folder=$kubernetes_folder/logs
 }
@@ -83,8 +83,18 @@ show_help(){
 	echo ""
 }
 
+is_supported_os(){
+ os=$(uname -a) 
+ if [[ $os == *"Darwin"* ]] || [[ $os == *"CYGWIN"* ]]; then
+  return 1; #false, not supported
+ else
+  return 0; #true, looks good
+ fi
+}
 
 get_system(){
+    
+
 	#system info
 	print_msg "Gathering system info..." "INFO"
 	uname -a > $diag_folder/uname.txt
@@ -214,16 +224,31 @@ get_kubernetes(){
 process_action(){
 	case $1 in
 		kubernetes)
-		create_folders kubernetes
-		get_kubernetes 
+		if [ -x "$(command -v kubectl)" ] ; then
+			create_folders kubernetes
+			get_kubernetes 
+                else
+			print_msg "kubectl command not found, skipping system information collection (-k)" "ERROR"
+			return
+		fi
 		;;
 		system)
-		create_folders system
-		get_system
+		if is_supported_os && pgrep -x "kubelet" >/dev/null; then
+			create_folders system
+			get_system
+		else
+			print_msg "Unsupported OS, or kubelet process not found skipping system information collection (-s)" "ERROR"
+			return
+		fi
 		;;
 		docker)
-		create_folders docker
-		get_docker 
+		if is_supported_os && [ -x "$(command -v docker)" ] && pgrep -x "kubelet" >/dev/null ; then
+			create_folders docker
+			get_docker 
+		else
+			print_msg "Unsupported OS or kubelet/docker not found, skipping docker information collection (-d)" "ERROR"
+			return
+		fi	
 		;;
 	esac
 	shift
