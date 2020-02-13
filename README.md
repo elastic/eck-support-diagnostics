@@ -2,9 +2,11 @@
 
 Collects Docker, System and Kubernetes level information from ECK for Elastic Support Team
 
-- Docker ps,info,images, and container stats
-- Various System Information (OS, processes, disk, network, SAR stats)
-- Kubernetes version, nodes, elastic-related resources, and elastic-related pod logs. 
+- Docker ps,info,images, and container stats (`-d`), run on the kubernetes node
+- Various System Information (OS, processes, disk, network, SAR stats) (`-s`), run on the kubernetes node
+- Kubernetes version, nodes, elastic-related resources, and elastic-related pod logs (`-k`), run anywhere you have `kubectl`
+
+
 
 ## Usage
 
@@ -42,7 +44,7 @@ Collect the last 24 hours of pod logs, and use a non-default namespace
 ./eck-diagnostics.sh -d -s -k -t 24h -n my-elastic-namespace 
 ```
 
-Collect Kubernetes information and output to a custom directory
+Collect Kubernetes information and output to a custom directory 
 
 ```
 ./eck-diagnostics.sh -k -o /custom/storage   
