@@ -1,3 +1,6 @@
+## DEPRECATED.  Use:  https://github.com/elastic/cloud-on-k8s/blob/master/hack/diagnostics/eck-dump.sh
+
+
 ## ECK Diagnostics
 
 Collects Docker, System and Kubernetes level information from ECK for Elastic Support Team
