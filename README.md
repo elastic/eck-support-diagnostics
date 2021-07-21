@@ -1,4 +1,4 @@
-## DEPRECATED.  Use:  https://github.com/elastic/cloud-on-k8s/blob/master/hack/diagnostics/eck-dump.sh
+## DEPRECATED.  Use:  https://github.com/elastic/cloud-on-k8s/blob/master/support/diagnostics/eck-dump.sh
 
 
 ## ECK Diagnostics
